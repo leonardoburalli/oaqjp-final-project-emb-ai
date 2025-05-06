@@ -14,12 +14,15 @@ def em_detector():
 
     response = emotion_detector(text_to_analyze)
 
-    emotion_values = [f"'{key}': {value}" for key, 
-    value in response.items() if key not in ("sadness" ,"dominant_emotion")]
+    if response['dominant_emotion'] == None:
+        return "Invalid text! Please try again!"
+    else:
+        emotion_values = [f"'{key}': {value}" for key, 
+        value in response.items() if key not in ("sadness" ,"dominant_emotion")]
 
-    result_string = f"For the given statement, the system response is {', '.join(emotion_values)}" \
-     f" and 'sadness': {response['sadness']}. The dominant emotion is {response['dominant_emotion']}."
-    return result_string
+        result_string = f"For the given statement, the system response is {', '.join(emotion_values)}" \
+        f" and 'sadness': {response['sadness']}. The dominant emotion is {response['dominant_emotion']}."
+        return result_string
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=4444)
